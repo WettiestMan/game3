@@ -1,5 +1,6 @@
-#include "include/player.hpp"
+#include "include/Game.hpp"  
 
 int main() {
-    return 0;
+    Game* game = Game::get_instance();
+    return game->run();
 }
