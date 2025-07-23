@@ -15,6 +15,7 @@ std::expected<EnemyUfo, int> EnemyUfo::create(Vector2 pos, Texture sprite, Textu
     ufo.projectile_manager = Game::get_instance()->get_projectile_manager();
     ufo.shoot_timer = shoot_delay;
     ufo.animation_timer = 0.0f;
+    ufo.current_spawn_time = 0.0f;
 
     if (ap == Appeareance::left) {
         ufo.position.x = -width; // Start off-screen to the left

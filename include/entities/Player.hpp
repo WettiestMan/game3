@@ -57,6 +57,10 @@ public:
         return Rectangle{position.x, position.y, static_cast<float>(width), static_cast<float>(height)};
     }
 
+    Vector2 get_position() const noexcept {
+        return position;
+    }
+
 private:
     void display_health() const noexcept;
 };

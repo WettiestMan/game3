@@ -47,6 +47,7 @@
         "bitset": "cpp",
         "random": "cpp",
         "regex": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "__config": "cpp"
     }
 }

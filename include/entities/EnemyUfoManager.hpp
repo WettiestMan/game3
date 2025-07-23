@@ -6,6 +6,7 @@
 #include <vector>
 #include "EnemyUfo.hpp"
 #include "include/ResourceManager.hpp"
+#include "Spawnable.hpp"
 
 class EnemyUfoManager {
 private:

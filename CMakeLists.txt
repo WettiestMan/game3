@@ -26,7 +26,8 @@ add_executable(game3
     src/entities/EnemyProjectileManager.cpp
     src/entities/EnemyUfo.cpp
     src/entities/EnemyUfoManager.cpp
-    src/CollisionManager.cpp)
+    src/CollisionManager.cpp
+    src/entities/EnemyFighter.cpp)
 
 target_compile_features(game3 PRIVATE cxx_std_23)
 
