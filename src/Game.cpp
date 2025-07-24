@@ -6,7 +6,8 @@
 
 int Game::oops = 0;
 
-Game::Game() noexcept : over(false), player{nullptr}, projectile_manager{nullptr} {
+Game::Game() noexcept : over(false), player{nullptr}, boss{nullptr},
+    projectile_manager{nullptr}, boss_spawned{false}, points{29} {
 }
 
 int Game::run() noexcept {
@@ -24,21 +25,40 @@ int Game::run() noexcept {
     }
 
     while(!WindowShouldClose()) {
-        BeginDrawing();
         if (!over) {
+            if (!boss_spawned && points >= boss_spawn_points) {
+                auto boss_creation = Boss::create().value();
+                entities.push_back(std::move(boss_creation));
+                boss = std::get_if<Boss>(&entities.back());
+                boss_spawned = true;
+                ufo_manager->halt();
+                fighter_manager->halt();
+            }
+
             for (auto& entity : entities) {
                 update_entity(entity);
                 CollisionManager::check_collisions(*player,
+                    boss,
                     player->get_projectiles(),
                     ufo_manager->get_enemies(),
                     fighter_manager->get_enemies(),
                     projectile_manager->get_projectiles()
                 );
+                BeginDrawing();
                 draw_entity(entity);
             }
 
             if (!player->is_alive()) {
                 over = true;
+            }
+
+            if (boss && !boss->is_alive()) {
+                entities.pop_back();
+                boss = nullptr;
+                ufo_manager->halt();
+                fighter_manager->halt();
+                ufo_manager->resume();
+                fighter_manager->resume();
             }
 
             EndDrawing();
@@ -61,6 +81,7 @@ int Game::run() noexcept {
 }
 
 int Game::create_entities() noexcept {
+    entities.reserve(20);
     auto background = Background::create();
     if (!background) {
         TraceLog(LOG_FATAL, "Couldn't create background");
@@ -120,11 +141,19 @@ void Game::reset() noexcept {
     for (auto& entity : entities) {
         reset_entity(entity);
     }
+
+    if (boss) {
+        entities.pop_back();
+        boss = nullptr;
+    }
+
+    boss_spawned = false;
 }
 
 int Game::show_game_over() noexcept {
     for (auto& entity : entities) {
         update_entity(entity);
+        BeginDrawing();
         draw_entity(entity);
     }
 

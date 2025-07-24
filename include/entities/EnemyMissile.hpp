@@ -33,7 +33,7 @@ public:
 
     bool is_alive() const noexcept { return alive; }
     void kill() noexcept { alive = false; }
-    int get_damage() const noexcept { return 4; } // Assuming a fixed damage value
+    int get_damage() const noexcept { return 2; } // Assuming a fixed damage value
     Rectangle get_bounding_box() const noexcept {
         return Rectangle{position.x, position.y, static_cast<float>(width), static_cast<float>(height)};
     }

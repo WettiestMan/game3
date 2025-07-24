@@ -7,11 +7,13 @@
 #include "entities/EnemyUfo.hpp"
 #include "entities/EnemyProjectileManager.hpp"
 #include "entities/EnemyFighter.hpp"
+#include "entities/Boss.hpp"
 
 class CollisionManager {
 public:
     static void check_collisions(
         Player& player,
+        Boss* boss,
         std::vector<PlayerProjectile>& player_projectiles,
         std::vector<EnemyUfo>& ufos,
         std::vector<EnemyFighter>& fighters,

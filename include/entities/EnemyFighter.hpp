@@ -37,7 +37,7 @@ private:
 
     constexpr static float shoot_interval = 3.0f;
     constexpr static int max_ammo = 8;
-    constexpr static int fighter_damage = 10;
+    constexpr static int fighter_damage = 6;
 
     constexpr static float speed = 200.0f;
 

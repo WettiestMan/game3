@@ -12,7 +12,9 @@ enum class ResourceElements {
     enemy_fighter,
     enemy_projectile,
     enemy_ufo,
-    boom
+    boom,
+    boss,
+    big_boom
 };
 
 std::string get_resource_name(ResourceElements rd) noexcept;

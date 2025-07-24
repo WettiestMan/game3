@@ -3,6 +3,7 @@
 
 void CollisionManager::check_collisions(
     Player& player,
+    Boss* boss,
     std::vector<PlayerProjectile>& player_projectiles,
     std::vector<EnemyUfo>& ufos,
     std::vector<EnemyFighter>& fighters,
@@ -37,9 +38,15 @@ void CollisionManager::check_collisions(
                     proj.kill();
                 }
             }
+
+            if (boss && boss->is_present() && CheckCollisionRecs(proj.get_bounding_box(), boss->get_bounding_box())) {
+                boss->damage(proj.get_damage());
+                proj.kill();
+            }
         }
 
-        // Player vs UFOs (opcional)
+
+        // Player vs UFOs
         for (size_t i = 0; i < ufos.size(); ++i) {
             if (!ufos[i].is_present()) continue;
             if (CheckCollisionRecs(player.get_bounding_box(), ufos[i].get_bounding_box())) {
@@ -48,11 +55,17 @@ void CollisionManager::check_collisions(
             }
         }
 
+        // Player vs Fighters
         for (size_t i = 0; i < fighters.size(); ++i) {
             if (!fighters[i].is_present()) continue;
             if (CheckCollisionRecs(player.get_bounding_box(), fighters[i].get_bounding_box())) {
                 player.damage(fighters[i].get_damage());
                 fighters[i].kill();
             }
+        }
+
+        // Player vs Boss
+        if (boss && boss->is_present() && CheckCollisionRecs(player.get_bounding_box(), boss->get_bounding_box())) {
+            player.damage(boss->get_damage());
         }
     }

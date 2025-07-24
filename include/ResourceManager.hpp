@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <cstddef>
 #include "magic_enum/magic_enum.hpp"
-#include "ResourceElemets.hpp"
+#include "ResourceElements.hpp"
 
 class ResourceManager
 {

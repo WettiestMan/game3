@@ -1,6 +1,6 @@
 #include "include/entities/Player.hpp"
 #include "include/ResourceManager.hpp"
-#include "include/ResourceElemets.hpp"
+#include "include/ResourceElements.hpp"
 #include "include/entities/Background.hpp"
 #include "include/Game.hpp"
 

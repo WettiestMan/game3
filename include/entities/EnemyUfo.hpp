@@ -69,7 +69,7 @@ public:
     bool is_present() const noexcept { return present; }
     void kill() noexcept { present = false; current_sprite_index = 0; }
 
-    int get_damage() noexcept { return 8; }
+    int get_damage() noexcept { return 4; }
 
     static float get_spawn_time() noexcept { return current_spawn_time; }
     consteval static float get_spawn_interval() noexcept { return spawn_interval_decrease; }

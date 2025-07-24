@@ -21,6 +21,7 @@ public:
 
     float spawn_timer;
     float current_spawn_time = max_spawn_time;
+    bool halted = false;
 
     EnemyFighterManager() = default;
 
@@ -40,8 +41,19 @@ public:
         return fighters;
     }
 
-private:
     void spawn() noexcept;
+    void halt() noexcept {
+        halted = true;
+        for (auto& fighter : fighters) {
+            fighter.kill();
+        }
+    }
+
+    void resume() noexcept {
+        halted = false;
+    }
+
+private:
     void increase_spawn_frequency() noexcept {
         int times = *curr_points / spawn_interval_rate;
         float new_interval = max_spawn_time - times * spawn_interval_decrease;

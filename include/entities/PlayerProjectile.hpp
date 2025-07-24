@@ -30,6 +30,11 @@ public:
     Rectangle get_bounding_box() const noexcept {
         return Rectangle{position.x, position.y, static_cast<float>(width), static_cast<float>(height)};
     };
+
+    constexpr int get_damage() const noexcept {
+        return 1;
+    }
+
     bool is_alive() const noexcept { return alive; }
     void kill() noexcept { alive = false; }
 };

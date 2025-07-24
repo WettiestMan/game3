@@ -11,6 +11,7 @@
 #include "EnemyUfoManager.hpp"
 #include "Score.hpp"
 #include "EnemyFighterManager.hpp"
+#include "Boss.hpp"
 
 template<class T>
 concept Renderable = requires(T t) {
@@ -28,7 +29,8 @@ using Entity = EntityList<
     EnemyProjectileManager,
     EnemyUfoManager,
     EnemyFighterManager,
-    Score
+    Score,
+    Boss
     >;
 
 inline void update_entity(Entity& entity) noexcept {

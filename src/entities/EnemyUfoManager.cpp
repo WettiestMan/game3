@@ -21,10 +21,13 @@ std::expected<EnemyUfoManager, int> EnemyUfoManager::create() noexcept {
 
 void EnemyUfoManager::update() noexcept {
     static int points_snapshot = *curr_points;
-    spawn_timer += GetFrameTime();
-    if (spawn_timer >= spawn_interval) {
-        spawn();
-        spawn_timer = 0.0f;
+
+    if (!halted) {
+        spawn_timer += GetFrameTime();
+        if (spawn_timer >= spawn_interval) {
+            spawn();
+            spawn_timer = 0.0f;
+        }
     }
 
     for (auto& ufo : ufos) {
@@ -52,6 +55,7 @@ void EnemyUfoManager::reset() noexcept {
     ufos.clear();
     spawn_timer = 0.0f;
     spawn_interval = max_spawn_interval; // Reset to initial spawn interval
+    halted = false;
 }
 
 void EnemyUfoManager::spawn() noexcept {

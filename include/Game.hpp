@@ -7,6 +7,7 @@
 #include "include/entities/EnemyProjectileManager.hpp"
 #include "include/entities/EnemyUfoManager.hpp"
 #include "include/entities/EnemyFighterManager.hpp"
+#include "include/entities/Boss.hpp"
 
 class EnemyProjectileManager;
 class EnemyUfoManager;
@@ -20,6 +21,11 @@ private:
     EnemyProjectileManager* projectile_manager;
     EnemyUfoManager* ufo_manager;
     EnemyFighterManager* fighter_manager;
+    Boss* boss;
+
+    constexpr static int boss_spawn_points = 30;
+    bool boss_spawned;
+
     int create_entities() noexcept;
     void reset() noexcept;
     int show_game_over() noexcept;

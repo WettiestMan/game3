@@ -1,6 +1,6 @@
 #include "include/entities/EnemyFighterManager.hpp"
 #include "include/ResourceManager.hpp"
-#include "include/ResourceElemets.hpp"
+#include "include/ResourceElements.hpp"
 #include "include/Game.hpp"
 
 std::expected<EnemyFighterManager, int> EnemyFighterManager::create() noexcept {
@@ -22,11 +22,14 @@ std::expected<EnemyFighterManager, int> EnemyFighterManager::create() noexcept {
 }
 
 void EnemyFighterManager::update() noexcept {
+
     static int points_snapshot = *curr_points;
-    spawn_timer += GetFrameTime();
-    if (spawn_timer >= current_spawn_time) {
-        spawn();
-        spawn_timer = 0.0f;
+    if (!halted) {
+        spawn_timer += GetFrameTime();
+        if (spawn_timer >= current_spawn_time) {
+            spawn();
+            spawn_timer = 0.0f;
+        }
     }
 
     for (auto& fighter : fighters) {
@@ -54,6 +57,7 @@ void EnemyFighterManager::reset() noexcept {
     fighters.clear();
     spawn_timer = 0.0f;
     current_spawn_time = max_spawn_time;
+    halted = false;
 }
 
 void EnemyFighterManager::spawn() noexcept {

@@ -40,7 +40,6 @@ void EnemyUfo::update() noexcept {
         if (animation_timer >= Game::animation_interval) {
             animation_timer = 0.0f;
             current_sprite_index++;
-            TraceLog(LOG_DEBUG, "current frame is %d", current_sprite_index);
             if (current_sprite_index >= sizeof(sprites_offsets) / sizeof(sprites_offsets[0])) {
                 current_sprite_index = 0; // Loop through the sprite frames
             }

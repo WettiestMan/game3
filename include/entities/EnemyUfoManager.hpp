@@ -16,6 +16,7 @@ private:
     Texture explosion_sprites;
     float spawn_timer;
     float spawn_interval = 3.0f; // seconds
+    bool halted = false;
     constexpr static float max_spawn_interval = 3.0f;
     constexpr static float min_spawn_interval = 0.75f;
     constexpr static float spawn_interval_decrease = 0.25f; // seconds
@@ -40,8 +41,19 @@ public:
         return ufos;
     }
 
-private:
     void spawn() noexcept;
+    void halt() noexcept {
+        halted = true;
+        for (auto& ufo : ufos) {
+            ufo.kill();
+        }
+    }
+
+    void resume() noexcept {
+        halted = false;
+    }
+
+private:
     void increase_spawn_frequency() noexcept {
         int times = *curr_points / spawn_interval_rate;
         float new_interval = max_spawn_interval - times * spawn_interval_decrease;

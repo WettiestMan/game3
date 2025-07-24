@@ -1,4 +1,4 @@
-#include "include/ResourceElemets.hpp"
+#include "include/ResourceElements.hpp"
 
 std::string get_resource_name(ResourceElements rd) noexcept {
     std::string name{magic_enum::enum_name(rd)};

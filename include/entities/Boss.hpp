@@ -4,36 +4,86 @@
 #include "raylib.h"
 #include <expected>
 #include "EnemyProjectileManager.hpp"
+#include "EnemyUfoManager.hpp"
+#include "EnemyFighterManager.hpp"
+#include <cmath>
 
 class Boss {
 private:
     Texture sprites;
-    Texture explosion_sprites;
+    Texture defeated_sprites;
     Vector2 position;
     Vector2 destination;
     Vector2 anchor_point;
     EnemyProjectileManager* projectile_manager;
+    EnemyUfoManager* ufo_manager;
+    EnemyFighterManager* fighter_manager;
+
+    constexpr static float sprites_offsets[] = {
+        0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832
+    };
+
     float shoot_timer;
     float animation_timer;
+    float alternative_animation_timer = 0.0f;
     int current_sprite_index = 0;
+    int boss_idle_sprite_index_when_defeated = 1;
     bool alive;
     bool present;
+    bool in_defeated_animation_loop;
+    constexpr static int in_defeated_animation_loop_times = 10;
+    int in_defeated_animation_loop_counter = 0;
+    constexpr static ptrdiff_t defeated_sprite_loop_index_amount = 4;
+    constexpr static ptrdiff_t defeated_sprite_loop_index_min = 7;
+    constexpr static ptrdiff_t defeated_sprite_loop_index_max =
+            defeated_sprite_loop_index_min + defeated_sprite_loop_index_amount;
+
+    
+    constexpr static int barrages_for_do_projectile_spam = 12;
+    constexpr static float time_after_barrage_to_next = 0.5f;
+    float current_time_after_barrage = 0;
+    int barrages_counter = 0;
+
+    constexpr static int num_directions = 16;
+
+    // [0] = primer set (0°), [1] = segundo set (15°)
+    const static Vector2 projectile_directions[2][num_directions];
+    int projectile_directions_set_alternator = 0;
+
+    constexpr static int shots_ammo_for_shoot = 12;
+    constexpr static float time_after_shots = 0.3f;
+    float current_time_after_shots = 0;
+    int shots_counter = 0;
+
+    constexpr static int enemies_amount_for_spawn = 4;
+    bool in_spawn_animation_startup = true;
+
+    constexpr static int no_spins_for_charge = 16;
+    constexpr static float charge_speed = 130.0f;
+    constexpr static float homing_strength = 0.0008f;
+    int spins_counter = 0;
+
+    enum class Status {
+        idle,
+        in_starting_animation,
+        doing_action,
+        returning_to_idle
+    };
+
+    Status status = Status::in_starting_animation;
 
     int health;
-    constexpr static int max_health = 100;
+    constexpr static int max_health = 150;
 
     constexpr static float speed = 80.0f;
 
-    void(Boss::*actions[])() = {
-        &Boss::shoot,
-        &Boss::charge_at_player,
-        &Boss::spawn_enemies,
-        &Boss::do_projectile_spam
-    };
+    constexpr static size_t no_actions = 4;
+    void(Boss::*actions[no_actions])();
+    constexpr static float action_interval = 6.0f;
 
-    constexpr static size_t no_actions = sizeof(this->actions) / sizeof(this->actions[0]);
+    float action_timer = 0.0f;
 
-    constexpr static ptrdiff_t current_action = -1;
+    ptrdiff_t current_action = -1;
     
     Boss() = default;
 public:
@@ -64,14 +114,15 @@ public:
         return present;
     }
 
-    void kill() noexcept {
-        present = false;
-        current_sprite_index = 0;
-    }
+    void kill() noexcept;
 
     void damage(int amount) noexcept;
     int get_health() const noexcept {
         return health;
+    }
+
+    constexpr int get_damage() const noexcept {
+        return 6;
     }
 
 private:
