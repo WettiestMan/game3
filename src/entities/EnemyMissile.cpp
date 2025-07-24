@@ -29,12 +29,16 @@ void EnemyMissile::update() noexcept {
         Vector2 target_center = {target_box.x + target_box.width / 2.0f, target_box.y + target_box.height / 2.0f};
         Vector2 to_target = Vector2Normalize(Vector2Subtract(target_center, position));
         // Interpolación suave de dirección (ajuste el factor para más o menos "giro")
-        const float homing_strength = 0.08f; // 0 = no gira, 1 = sigue instantáneamente
+        const float homing_strength = 0.008f; // 0 = no gira, 1 = sigue instantáneamente
         direction = Vector2Normalize(Vector2Lerp(direction, to_target, homing_strength));
     }
     // Mover el misil
     position.x += direction.x * speed * delta;
     position.y += direction.y * speed * delta;
+
+    if (position.y > Background::real_height || position.y < 0 - height ||
+        position.x > Background::real_width || position.x < 0 - width)
+        alive = false;
 }
 
 void EnemyMissile::draw() noexcept {

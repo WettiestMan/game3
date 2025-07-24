@@ -10,6 +10,7 @@
 #include "EnemyProjectileManager.hpp"
 #include "EnemyUfoManager.hpp"
 #include "Score.hpp"
+#include "EnemyFighterManager.hpp"
 
 template<class T>
 concept Renderable = requires(T t) {
@@ -26,6 +27,7 @@ using Entity = EntityList<
     Background,
     EnemyProjectileManager,
     EnemyUfoManager,
+    EnemyFighterManager,
     Score
     >;
 

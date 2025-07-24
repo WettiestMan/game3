@@ -12,7 +12,7 @@ private:
     PlayerProjectile() = default;
 
 public:
-    constexpr static float speed = 300.0f;
+    constexpr static float speed = 320.0f;
     constexpr static int width = 8;
     constexpr static int height = 8;
 

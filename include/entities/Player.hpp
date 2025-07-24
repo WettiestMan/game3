@@ -22,7 +22,7 @@ private:
     };
     int current_sprite_index = 0;
     constexpr static int first_defeated_sprite_index = 2;
-    constexpr static int speed = 100;
+    constexpr static int speed = 120;
     constexpr static float shoot_delay = 0.3f; // seconds
 
 public:

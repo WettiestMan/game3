@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        ".gitignore": "ignore",
         "__verbose_abort": "cpp",
         "array": "cpp",
         "cctype": "cpp",
@@ -48,6 +49,17 @@
         "random": "cpp",
         "regex": "cpp",
         "*.inc": "cpp",
-        "__config": "cpp"
-    }
+        "__config": "cpp",
+        "print": "cpp",
+        "version": "cpp",
+        "format": "cpp",
+        "__bit_reference": "cpp",
+        "__locale": "cpp",
+        "__split_buffer": "cpp",
+        "cstdarg": "cpp",
+        "execution": "cpp",
+        "mutex": "cpp",
+        "streambuf": "cpp"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

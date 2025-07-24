@@ -16,7 +16,7 @@ private:
     EnemyMissile() = default;
 
 public:
-    constexpr static float speed = 200.0f;
+    constexpr static float speed = 150.0f;
     constexpr static int width = 16;
     constexpr static int height = 26;
 

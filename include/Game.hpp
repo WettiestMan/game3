@@ -6,6 +6,7 @@
 #include "include/entities/Player.hpp"
 #include "include/entities/EnemyProjectileManager.hpp"
 #include "include/entities/EnemyUfoManager.hpp"
+#include "include/entities/EnemyFighterManager.hpp"
 
 class EnemyProjectileManager;
 class EnemyUfoManager;
@@ -18,6 +19,7 @@ private:
     Player* player;
     EnemyProjectileManager* projectile_manager;
     EnemyUfoManager* ufo_manager;
+    EnemyFighterManager* fighter_manager;
     int create_entities() noexcept;
     void reset() noexcept;
     int show_game_over() noexcept;
@@ -41,6 +43,10 @@ public:
 
     EnemyUfoManager* get_ufo_manager() noexcept {
         return ufo_manager;
+    }
+
+    EnemyFighterManager* get_fighter_manager() noexcept {
+        return fighter_manager;
     }
 
     int& get_points() noexcept {

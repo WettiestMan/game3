@@ -36,12 +36,12 @@ public:
     void draw() noexcept;
     void reset() noexcept;
 
-    std::vector<EnemyUfo>& get_ufos() noexcept {
+    std::vector<EnemyUfo>& get_enemies() noexcept {
         return ufos;
     }
 
 private:
-    void spawn_ufo() noexcept;
+    void spawn() noexcept;
     void increase_spawn_frequency() noexcept {
         int times = *curr_points / spawn_interval_rate;
         float new_interval = max_spawn_interval - times * spawn_interval_decrease;

@@ -5,7 +5,6 @@
 #include <expected>
 #include <array>
 #include "EnemyProjectileManager.hpp"
-#include "Spawnable.hpp"
 
 class EnemyUfo {
 private:
@@ -37,7 +36,7 @@ private:
     constexpr static float spawn_time_max = 3.0f;
     constexpr static float spawn_time_min = 0.75;
     constexpr static float spawn_interval_decrease = 0.25f;
-    float current_spawn_time = spawn_time_max;
+    static float current_spawn_time;
 
     bool alive;
     bool present;
@@ -72,11 +71,11 @@ public:
 
     int get_damage() noexcept { return 8; }
 
-    float get_spawn_time() const noexcept { return current_spawn_time; }
-    float get_spawn_interval() const noexcept { return spawn_interval_decrease; }
-    void reduce_spawn_time_by_interval() noexcept { current_spawn_time -= spawn_interval_decrease; }
-    float get_max_spawn_time() const noexcept { return spawn_time_max; }
-    float get_min_spawn_time() const noexcept { return spawn_time_min; }
+    static float get_spawn_time() noexcept { return current_spawn_time; }
+    consteval static float get_spawn_interval() noexcept { return spawn_interval_decrease; }
+    static void reduce_spawn_time_by_interval() noexcept { current_spawn_time -= spawn_interval_decrease; }
+    consteval static float get_max_spawn_time() noexcept { return spawn_time_max; }
+    consteval static float get_min_spawn_time() noexcept { return spawn_time_min; }
 };
 
 #endif

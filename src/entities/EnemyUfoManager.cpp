@@ -5,7 +5,7 @@
 
 std::expected<EnemyUfoManager, int> EnemyUfoManager::create() noexcept {
     EnemyUfoManager manager;
-    manager.ufos.reserve(10); // Reserve space for 10 UFOs initially
+    manager.ufos.reserve(30); // Reserve space for 30 UFOs initially
     manager.ufo_sprites = ResourceManager::get_resource(ResourceElements::enemy_ufo);
     manager.explosion_sprites = ResourceManager::get_resource(ResourceElements::boom);
 
@@ -23,7 +23,7 @@ void EnemyUfoManager::update() noexcept {
     static int points_snapshot = *curr_points;
     spawn_timer += GetFrameTime();
     if (spawn_timer >= spawn_interval) {
-        spawn_ufo();
+        spawn();
         spawn_timer = 0.0f;
     }
 
@@ -51,10 +51,10 @@ void EnemyUfoManager::draw() noexcept {
 void EnemyUfoManager::reset() noexcept {
     ufos.clear();
     spawn_timer = 0.0f;
-    spawn_interval = 5.0f; // Reset to initial spawn interval
+    spawn_interval = max_spawn_interval; // Reset to initial spawn interval
 }
 
-void EnemyUfoManager::spawn_ufo() noexcept {
+void EnemyUfoManager::spawn() noexcept {
     Vector2 spawn_position;
     if (GetRandomValue(0, 1) == 0) {
         spawn_position = Vector2{ -EnemyUfo::width, (float)GetRandomValue(0, Background::real_height - EnemyUfo::height) };

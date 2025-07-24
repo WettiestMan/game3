@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <expected>
 #include "EnemyProjectileManager.hpp"
+#include <cmath>
 
 class EnemyFighter {
 private:
@@ -36,19 +37,20 @@ private:
 
     constexpr static float shoot_interval = 3.0f;
     constexpr static int max_ammo = 8;
-    constexpr static int width = 32;
-    constexpr static int height = 32;
     constexpr static int fighter_damage = 10;
 
-    constexpr static float speed = 100.0f;
+    constexpr static float speed = 200.0f;
 
     constexpr static float spawn_time_max = 5.0f;
     constexpr static float spawn_time_min = 2.75f;
     constexpr static float spawn_interval_decrease = 0.25f;
-    float current_spawn_time = 3.0f;
+    static float current_spawn_time;
 
     EnemyFighter() = default;
 public:
+    constexpr static int width = 32;
+    constexpr static int height = 32;
+
     EnemyFighter(const EnemyFighter&) = default;
     EnemyFighter(EnemyFighter&&) = default;
     EnemyFighter& operator=(const EnemyFighter&) = default;
@@ -69,11 +71,11 @@ public:
 
     int get_damage() const noexcept { return fighter_damage; }
 
-    float get_spawn_time() const noexcept { return current_spawn_time; }
-    float get_spawn_interval() const noexcept { return spawn_interval_decrease; }
-    void reduce_spawn_time_by_interval() noexcept { current_spawn_time -= spawn_interval_decrease; }
-    float get_max_spawn_time() const noexcept { return spawn_time_max; }
-    float get_min_spawn_time() const noexcept { return spawn_time_min; }
+    static float get_spawn_time() noexcept { return current_spawn_time; }
+    constexpr static float get_spawn_interval() noexcept { return spawn_interval_decrease; }
+    static void reduce_spawn_time_by_interval() noexcept { current_spawn_time -= spawn_interval_decrease; }
+    constexpr static float get_max_spawn_time() noexcept { return spawn_time_max; }
+    constexpr static float get_min_spawn_time() noexcept { return spawn_time_min; }
 };
 
 #endif

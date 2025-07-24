@@ -30,7 +30,8 @@ int Game::run() noexcept {
                 update_entity(entity);
                 CollisionManager::check_collisions(*player,
                     player->get_projectiles(),
-                    ufo_manager->get_ufos(),
+                    ufo_manager->get_enemies(),
+                    fighter_manager->get_enemies(),
                     projectile_manager->get_projectiles()
                 );
                 draw_entity(entity);
@@ -94,6 +95,14 @@ int Game::create_entities() noexcept {
         return oops;
     }
     entities.push_back(std::move(ufo_manager.value()));
+    
+    auto fighter_manager = EnemyFighterManager::create();
+    if (!fighter_manager) {
+        TraceLog(LOG_FATAL, "Couldn't create fighter manager");
+        oops = fighter_manager.error();
+        return oops;
+    }
+    entities.push_back(std::move(fighter_manager.value()));
 
     auto score = Score::create(&points);
     entities.push_back(std::move(score));
@@ -101,6 +110,7 @@ int Game::create_entities() noexcept {
     this->player = std::get_if<Player>(&entities[1]);
     this->projectile_manager = std::get_if<EnemyProjectileManager>(&entities[2]);
     this->ufo_manager = std::get_if<EnemyUfoManager>(&entities[3]);
+    this->fighter_manager = std::get_if<EnemyFighterManager>(&entities[4]);
     return 0;
 }
 

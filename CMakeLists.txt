@@ -2,7 +2,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 cmake_minimum_required(VERSION 3.30)
 
-project(game3 VERSION 0.1 LANGUAGES C CXX)
+project(game3 VERSION 0.2 LANGUAGES C CXX)
 
 # download CPM.cmake
 file(
@@ -27,9 +27,14 @@ add_executable(game3
     src/entities/EnemyUfo.cpp
     src/entities/EnemyUfoManager.cpp
     src/CollisionManager.cpp
-    src/entities/EnemyFighter.cpp)
+    src/entities/EnemyFighter.cpp
+    src/entities/EnemyFighterManager.cpp
+    src/entities/Boss.cpp)
 
-target_compile_features(game3 PRIVATE cxx_std_23)
+# target_compile_features(game3 PRIVATE cxx_std_23)
+set_property(TARGET game3 PROPERTY CXX_STANDARD 23)
+set_property(TARGET game3 PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET game3 PROPERTY CXX_EXTENSIONS OFF)
 
 find_package(raylib REQUIRED)
 

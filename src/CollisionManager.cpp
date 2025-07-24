@@ -5,6 +5,7 @@ void CollisionManager::check_collisions(
     Player& player,
     std::vector<PlayerProjectile>& player_projectiles,
     std::vector<EnemyUfo>& ufos,
+    std::vector<EnemyFighter>& fighters,
     std::vector<EnemyProjectileEntity>& enemy_projectiles
 ) noexcept {
         // Player vs Enemy Projectiles
@@ -27,14 +28,31 @@ void CollisionManager::check_collisions(
                     proj.kill();
                 }
             }
+
+            for (auto& fighter : fighters) {
+                if (!fighter.is_present()) continue;
+                if (CheckCollisionRecs(proj.get_bounding_box(), fighter.get_bounding_box())) {
+                    Game::get_instance()->get_points()++;
+                    fighter.kill();
+                    proj.kill();
+                }
+            }
         }
 
         // Player vs UFOs (opcional)
         for (size_t i = 0; i < ufos.size(); ++i) {
             if (!ufos[i].is_present()) continue;
             if (CheckCollisionRecs(player.get_bounding_box(), ufos[i].get_bounding_box())) {
-                player.damage(1);
+                player.damage(ufos[i].get_damage());
                 ufos[i].kill();
+            }
+        }
+
+        for (size_t i = 0; i < fighters.size(); ++i) {
+            if (!fighters[i].is_present()) continue;
+            if (CheckCollisionRecs(player.get_bounding_box(), fighters[i].get_bounding_box())) {
+                player.damage(fighters[i].get_damage());
+                fighters[i].kill();
             }
         }
     }

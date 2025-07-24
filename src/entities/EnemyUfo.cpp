@@ -3,6 +3,8 @@
 #include "include/entities/Background.hpp"
 #include <raymath.h>
 
+float EnemyUfo::current_spawn_time = EnemyUfo::spawn_time_max;
+
 std::expected<EnemyUfo, int> EnemyUfo::create(Vector2 pos, Texture sprite, Texture boom, Appeareance ap) noexcept {
     EnemyUfo ufo;
     ufo.position = pos;
