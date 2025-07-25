@@ -44,13 +44,13 @@ private:
     float current_time_after_barrage = 0;
     int barrages_counter = 0;
 
-    constexpr static int num_directions = 16;
+    constexpr static int num_directions = 12;
 
     // [0] = primer set (0°), [1] = segundo set (15°)
     const static Vector2 projectile_directions[2][num_directions];
     int projectile_directions_set_alternator = 0;
 
-    constexpr static int shots_ammo_for_shoot = 12;
+    constexpr static int shots_ammo_for_shoot = 16;
     constexpr static float time_after_shots = 0.3f;
     float current_time_after_shots = 0;
     int shots_counter = 0;
@@ -59,9 +59,11 @@ private:
     bool in_spawn_animation_startup = true;
 
     constexpr static int no_spins_for_charge = 16;
-    constexpr static float charge_speed = 130.0f;
-    constexpr static float homing_strength = 0.0008f;
+    constexpr static float charge_speed = 120.0f;
+    constexpr static float homing_strength = 0.4f;
+    constexpr static float time_pursuit_limit = 3.0f;
     int spins_counter = 0;
+    float time_pursuing = 0.0f;
 
     enum class Status {
         idle,

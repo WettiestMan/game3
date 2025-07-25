@@ -354,16 +354,26 @@ void Boss::charge_at_player() noexcept {
     if (spins_counter >= no_spins_for_charge) {
         const auto player_center = get_player_center();
         const auto direction = Vector2Normalize(player_center - position);
-        destination = Vector2Normalize(Vector2Lerp(destination, player_center, homing_strength));
+        destination = Vector2Normalize(Vector2Lerp(destination, player_center, homing_strength * delta));
         position.x += direction.x * charge_speed * delta;
         position.y += direction.y * charge_speed * delta;
+        time_pursuing += delta;
     }
 
-    if (position.x < -width || position.x > Background::real_width ||
+    if (time_pursuing >= time_pursuit_limit) {
+        status = Status::returning_to_idle;
+        time_pursuing = 0;
+        action_timer = 0;
+        spins_counter = 0;
+        current_sprite_index = 0;
+    }
+    else if (position.x < -width || position.x > Background::real_width ||
         position.y > Background::real_height) {
         position = Vector2{Background::real_width / 2.0f - width / 2.0f, -height};
         status = Status::returning_to_idle;
+        time_pursuing = 0;
         action_timer = 0.0f;
         spins_counter = 0;
+        current_sprite_index = 0;
     }
 }

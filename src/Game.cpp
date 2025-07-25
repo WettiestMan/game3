@@ -7,7 +7,7 @@
 int Game::oops = 0;
 
 Game::Game() noexcept : over(false), player{nullptr}, boss{nullptr},
-    projectile_manager{nullptr}, boss_spawned{false}, points{29} {
+    projectile_manager{nullptr}, boss_spawned{false}, points{0} {
 }
 
 int Game::run() noexcept {
@@ -157,8 +157,8 @@ int Game::show_game_over() noexcept {
         draw_entity(entity);
     }
 
-    DrawText("Game Over", Background::display_width / 2 - MeasureText("Game Over", 20) / 2, Background::display_height / 2 - 10, 20, WHITE);
-    DrawText("Press R to restart or Q to quit", Background::display_width / 2 - MeasureText("Press R to restart or Q to quit", 20) / 2, Background::display_height / 2 + 20, 20, WHITE);
+    DrawText("Perdiste", Background::display_width / 2 - MeasureText("Perdiste", 20) / 2, Background::display_height / 2 - 10, 20, WHITE);
+    DrawText("Pulse R para reiniciar o Q para salir", Background::display_width / 2 - MeasureText("Pulse R para reiniciar o Q para salir", 20) / 2, Background::display_height / 2 + 20, 20, WHITE);
 
     if (IsKeyPressed(KEY_R)) {
         return 0; // Restart

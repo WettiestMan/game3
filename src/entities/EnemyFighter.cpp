@@ -45,8 +45,8 @@ void EnemyFighter::update() noexcept {
             Vector2 target_center = get_player_center();
             Vector2 to_target = Vector2Normalize(target_center - position);
 
-            const float homing_strength = 0.06f;
-            destination = Vector2Normalize(Vector2Lerp(destination, to_target, homing_strength));
+            const float homing_strength = 1.4f;
+            destination = Vector2Normalize(Vector2Lerp(destination, to_target, homing_strength * delta));
 
             position.x += destination.x * speed * delta;
             position.y += destination.y * speed * delta;
