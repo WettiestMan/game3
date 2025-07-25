@@ -2,7 +2,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 cmake_minimum_required(VERSION 3.30)
 
-project(game3 VERSION 0.3 LANGUAGES C CXX)
+project(game3 VERSION 0.3.1 LANGUAGES C CXX)
 
 # download CPM.cmake
 file(
